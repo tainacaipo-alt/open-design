@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ['python3', 'make', 'gcc']
+
+[phases.install]
+cmds = ['pnpm install --frozen-lockfile']
+
+[phases.build]
+cmds = ['pnpm --filter @open-design/daemon build']
+
+[start]
+cmd = 'node apps/daemon/dist/sidecar/index.js'
