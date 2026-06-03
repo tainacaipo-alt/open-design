@@ -21,12 +21,10 @@ RUN corepack enable && \
     pnpm install --frozen-lockfile && \
     pnpm --filter @open-design/daemon build
 
-WORKDIR /app/apps/daemon
-
 ENV NODE_ENV=production
 ENV OD_BIND_HOST=0.0.0.0
 ENV OD_PORT=7456
 
 EXPOSE 7456
 
-CMD ["node", "dist/sidecar/index.js"]
+CMD ["node", "apps/daemon/dist/sidecar/index.js", "--od-stamp-app=daemon", "--od-stamp-mode=server", "--od-stamp-namespace=default", "--od-stamp-ipc=/tmp/open-design/ipc/daemon", "--od-stamp-source=daemon"]
