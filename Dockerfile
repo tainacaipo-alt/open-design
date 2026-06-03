@@ -19,8 +19,7 @@ COPY plugins/_official ./plugins/_official
 RUN corepack enable && \
     corepack prepare pnpm@10.33.2 --activate && \
     pnpm install --frozen-lockfile && \
-    pnpm --filter @open-design/daemon build && \
-    pnpm store prune
+    pnpm --filter @open-design/daemon build
 
 FROM node:24-alpine
 
@@ -28,6 +27,8 @@ RUN apk add --no-cache poppler-utils tini
 
 WORKDIR /app
 
+COPY --from=builder /app/package.json /app/pnpm-lock.yaml /app/pnpm-workspace.yaml ./
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/apps/daemon ./apps/daemon
 COPY --from=builder /app/skills ./skills
 COPY --from=builder /app/design-systems ./design-systems
