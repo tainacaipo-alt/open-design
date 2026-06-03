@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  open-design:
+    container_name: open-design
+    image: docker.io/vanjayak/open-design:latest
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    restart: always
+    environment:
+      NODE_ENV: production
+      NODE_OPTIONS: ---max-old-space-size=192
+      OD_BIND_HOST: 0.0.0.0
+      OD_PORT: 7456
+      OD_WEB_PORT: 7456
+      OD_API_TOKEN: b2e8cf798d53c8eb824f119f28d3013c26892fb0b2e67b18b2608b5b3d234297
+    ports:
+      - "127.0.0.1:7456:7456"
+    volumes:
+      - open_design_data:/app/.od
+    mem_limit: 384m
+    pids_limit: 256
+
+volumes:
+  open_design_data:

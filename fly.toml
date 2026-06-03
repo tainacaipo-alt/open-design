@@ -1,0 +1,26 @@
+app = 'open-design-y86sdw'
+primary_region = 'gru'
+
+[build]
+  docker = './deploy/Dockerfile'
+
+[processes]
+  app = 'node apps/daemon/src/sidecar/index.ts'
+
+[http_service]
+  internal_port = 7456
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '512mb'
+  cpu_kind = 'shared'
+  cpus = 1
+
+[env]
+  NODE_ENV = 'production'
+  OD_BIND_HOST = '0.0.0.0'
+  OD_PORT = '7456'
